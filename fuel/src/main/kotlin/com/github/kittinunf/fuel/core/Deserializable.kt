@@ -104,8 +104,8 @@ interface ResponseDeserializable<out T : Any> : Deserializable<T> {
  */
 fun <T : Any, U : Deserializable<T>> Request.response(deserializable: U, handler: ResponseResultHandler<T>): CancellableRequest =
     response(deserializable,
-        { request, response, value -> handler(request, response, Result.Success(value)) },
-        { request, response, error -> handler(request, response, Result.Failure(error)) }
+        { request, response, value -> handler(request, response, Result.success(value)) },
+        { request, response, error -> handler(request, response, Result.error(error)) }
     )
 
 /**
@@ -119,8 +119,8 @@ fun <T : Any, U : Deserializable<T>> Request.response(deserializable: U, handler
  */
 fun <T : Any, U : Deserializable<T>> Request.response(deserializable: U, handler: ResultHandler<T>): CancellableRequest =
     response(deserializable,
-        { _, _, value -> handler(Result.Success(value)) },
-        { _, _, error -> handler(Result.Failure(error)) }
+        { _, _, value -> handler(Result.success(value)) },
+        { _, _, error -> handler(Result.error(error)) }
     )
 
 /**
